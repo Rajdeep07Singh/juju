@@ -45,9 +45,7 @@ class AllClubs extends StatelessWidget {
             itemBuilder: (context, index) {
               Map<String, dynamic> club = clubs[index];
 
-              List<String> coordinators = club['Coordinators'] != null
-                  ? List<String>.from(club['Coordinators'])
-                  : [];
+
 
               return ListTile(
                 title: Text(club['name'] ?? 'N/A'),
@@ -55,7 +53,7 @@ class AllClubs extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(club['desc'] ?? 'N/A'),
-                    Text('Coordinators: ${coordinators.join(', ')}'),
+
                   ],
                 ),
                 // Display the photo using the 'photourl'
@@ -91,6 +89,14 @@ class ClubDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> coordinators = club['coordinators'] != null
+        ? List<String>.from(club['coordinators'])
+        : [];
+
+    List<String> members = club['members'] != null
+        ? List<String>.from(club['members'])
+        : [];
+
     return Scaffold(
       appBar: AppBar(
         title: Text(club['name'] ?? 'Club Details'),
@@ -100,12 +106,27 @@ class ClubDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Description: ${club['desc'] ?? 'N/A'}'),
-            Text('Coordinators: ${(club['Coordinators'] as List<dynamic>? ?? []).join(', ')}'),
-            // You can display additional club details here
+            Text('Coordinators: ${coordinators.join(', ')}'),
+            SizedBox(height: 16),
+            Text('Members:'),
+            // Use a ListView without a fixed height
+            Expanded(
+              child: ListView.builder(
+                itemCount: members.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    subtitle: Text('Member ${index + 1}'), // Index starts from 1
+                    title: Text(members[index]),
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: 16),
           ],
         ),
       ),
     );
   }
 }
+
+

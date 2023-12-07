@@ -5,6 +5,8 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:new_app/Pages/home/clubs.dart';
 
+import 'package:new_app/Pages/home/AnnouncementDetailsPage.dart';
+
 class ActivityPage extends StatefulWidget {
 
   const ActivityPage({super.key});
@@ -50,19 +52,24 @@ class _ActivityPageState extends State<ActivityPage> {
   Widget activityItem(int index) {
     return GestureDetector(
       onTap: () {
-        // Handle onTap event if needed
+        // Handle onTap event, navigate to a new page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AnnouncementDetailsPage(activity: _activities[index]),
+          ),
+        );
       },
       child: Card(
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(2.0), // Adjust the value to set your desired border radius
+          borderRadius: BorderRadius.circular(2.0),
         ),
         color: const Color.fromARGB(0, 159, 167, 173),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(5.0), // Apply the same border radius here
+          borderRadius: BorderRadius.circular(5.0),
           child: Stack(
             children: [
-              // Display the image of the announcement
               Image.network(
                 _activities[index]['image'],
                 height: 150,
@@ -126,8 +133,6 @@ class _ActivityPageState extends State<ActivityPage> {
       ),
     );
   }
-
-
 
 
 

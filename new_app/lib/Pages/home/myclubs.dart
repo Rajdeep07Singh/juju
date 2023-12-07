@@ -13,72 +13,90 @@ class MyClubsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('My Clubs'),
-        ),
-        body: FutureBuilder(
-            future: getCurrentUser(),
-            builder: (context, AsyncSnapshot<User?> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (!snapshot.hasData) {
-                return Center(child: Text('No Data'));
-              }
+      appBar: AppBar(
+        title: Text('My Clubs'),
+      ),
+      body: FutureBuilder(
+        future: getCurrentUser(),
+        builder: (context, AsyncSnapshot<User?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData) {
+            return Center(child: Text('No Data'));
+          }
 
-              User user = snapshot.data!;
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      user.displayName ?? "Guest",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      user.email ?? "",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    SizedBox(height: 20),
-                    // Fetch and display the "Clubs" array
-                    FutureBuilder(
-                      future: _firestore.collection('users').doc(user.uid).get(),
-                      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else if (!snapshot.hasData) {
-                          return Text('No additional data found');
-                        }
-
-                        // Extract the "Clubs" array
-                        List<dynamic>? clubs = snapshot.data!.get('Clubs');
-
-                        if (clubs == null || clubs.isEmpty) {
-                          return Text('No Clubs found');
-                        }
-
-                        // Display the "Clubs" array in a table
-                        return DataTable(
-                          columns: [DataColumn(label: Text('Clubs'))],
-                          rows: clubs
-                              .map(
-                                (club) => DataRow(cells: [
-                              DataCell(Text(club.toString())),
-                            ]),
-                          )
-                              .toList(),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              );
+          User user = snapshot.data!;
+          return RefreshIndicator(
+            onRefresh: () async {
+              // Add logic to refresh data
             },
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Card(
+                    elevation: 5,
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            user.displayName ?? "Guest",
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            user.email ?? "",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Divider(thickness: 1, color: Colors.grey),
+                  FutureBuilder(
+                    future: _firestore.collection('users').doc(user.uid).get(),
+                    builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (!snapshot.hasData) {
+                        return Center(child: Text('No additional data found'));
+                      }
+
+                      List<dynamic>? clubs = snapshot.data!.get('Clubs');
+
+                      if (clubs == null || clubs.isEmpty) {
+                        return Center(child: Text('You are not a member of any clubs.'));
+                      }
+
+                      return DataTable(
+                        headingTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                        dataTextStyle: TextStyle(fontSize: 16),
+                        columns: [DataColumn(label: Text('Clubs'))],
+                        rows: clubs
+                            .map(
+                              (club) => DataRow(cells: [
+                            DataCell(Text(club.toString())),
+                          ]),
+                        )
+                            .toList(),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-        );
-    }
+          );
+        },
+      ),
+    );
+  }
 }
