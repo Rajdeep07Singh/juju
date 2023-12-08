@@ -35,16 +35,27 @@ class MyApp extends StatelessWidget {
                   .collection('users')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .get(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<DocumentSnapshot> snapshot) {
+              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if (snapshot.hasData) {
-                  return CustomLoadingScreen(
-                    isLoading: false, // Set to true if you want to show loading
-                    child: HomePage(
-                      currentIndex: 0,
-                      profileType: snapshot.data!['profileType'].toString(),
-                    ),
-                  );
+                  String profileType = snapshot.data!['profileType'].toString();
+                  // Add your logic to decide which page to display initially
+                  if (profileType == 'Admin') {
+                    return CustomLoadingScreen(
+                      isLoading: false,
+                      child: HomePage(
+                        currentIndex: 2, // Display AdminPage initially
+                        profileType: profileType,
+                      ),
+                    );
+                  } else {
+                    return CustomLoadingScreen(
+                      isLoading: false,
+                      child: HomePage(
+                        currentIndex: 0, // Display ActivityPage initially
+                        profileType: profileType,
+                      ),
+                    );
+                  }
                 } else {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -56,7 +67,8 @@ class MyApp extends StatelessWidget {
             return const LoginPage();
           }
         },
-      ),
+      )
+      ,
     );
   }
 }

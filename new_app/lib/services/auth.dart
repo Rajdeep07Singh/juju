@@ -67,7 +67,7 @@ class Auth {
       // Additional step: Check if email is verified
       User user = FirebaseAuth.instance.currentUser!;
 
-      if (true) {
+      if (user.emailVerified) {
         return 'success';
       } else {
         // If email is not verified, sign out the user and show a message
