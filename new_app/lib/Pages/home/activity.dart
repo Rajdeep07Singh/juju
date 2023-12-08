@@ -162,6 +162,7 @@ class _ActivityPageState extends State<ActivityPage> {
           'ClubHub',
           style: TextStyle(
             fontSize: 22,
+            color: Colors.white,
           ),
 
         ),
@@ -170,12 +171,14 @@ class _ActivityPageState extends State<ActivityPage> {
         actions: [
           IconButton(
             icon: Icon(Icons.calendar_today),
+            color: Colors.white,
             onPressed: () {
               _showCalendar();
             },
           ),
           IconButton(
-            icon: Icon(Icons.add), // Change this to the desired icon
+            icon: Icon(Icons.info),
+            color: Colors.white,// Change this to the desired icon
             onPressed: () {
               // Add your logic to open a new page when the new icon is pressed
               _newpage();

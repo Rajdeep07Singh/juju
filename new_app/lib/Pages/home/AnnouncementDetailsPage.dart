@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AnnouncementDetailsPage extends StatelessWidget {
@@ -11,20 +12,37 @@ class AnnouncementDetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Announcement Details'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Event Name: ${activity['title'] ?? 'N/A'}',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            // You can display additional details about the announcement here
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Title: ${activity['title'] ?? 'N/A'}',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Date: ${_formatDate(activity['date']) ?? 'N/A'}',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Details: ${activity['details'] ?? 'N/A'}',
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  String? _formatDate(Timestamp? date) {
+    if (date == null) return null;
+    // Assuming date is a Timestamp, you may need to adjust this based on your data structure
+    DateTime dateTime = date.toDate();
+    return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
   }
 }
