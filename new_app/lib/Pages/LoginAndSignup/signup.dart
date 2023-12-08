@@ -20,6 +20,7 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   late ScaffoldMessengerState scaffoldMessenger;
+
   @override
   Widget build(BuildContext context) {
     scaffoldMessenger = ScaffoldMessenger.of(context);
@@ -157,6 +158,7 @@ class _SignupPageState extends State<SignupPage> {
                               const SnackBar(content: Text('Email field cannot be empty')));
 
                         }
+
                         // Check if the email is from lnmiit.ac.in
                         else if (!emailController.text.endsWith('@lnmiit.ac.in')) {
                           scaffoldMessenger.showSnackBar(
@@ -167,6 +169,7 @@ class _SignupPageState extends State<SignupPage> {
                           scaffoldMessenger.showSnackBar(
                               const SnackBar(content: Text('Password field cannot be empty')));
                         }
+
                         if (context.mounted) {
                           showDialog(
                             context: context,

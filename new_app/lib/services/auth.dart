@@ -54,6 +54,12 @@ class Auth {
       return e.toString();
     }
   }
+  bool isPasswordValid(String password) {
+    // Use a regular expression to enforce the password policy
+    RegExp passwordRegex =
+    RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$');
+    return passwordRegex.hasMatch(password);
+  }
 
 
   // Update your signinUser method in the Auth class

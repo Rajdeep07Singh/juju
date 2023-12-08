@@ -12,9 +12,14 @@ class MyClubsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(backgroundColor: Colors.blueGrey,
       appBar: AppBar(
-        title: Text('My Clubs'),
+        title: Text(
+          'My Clubs',
+          style: TextStyle(color: Colors.white, // Set the font color to white
+          ),
+        ),
+        backgroundColor: Colors.black,
       ),
       body: FutureBuilder(
         future: getCurrentUser(),
@@ -78,17 +83,34 @@ class MyClubsPage extends StatelessWidget {
                       }
 
                       return DataTable(
-                        headingTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                        dataTextStyle: TextStyle(fontSize: 16),
-                        columns: [DataColumn(label: Text('Clubs'))],
+                        headingTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 22   , color: Colors.black), // You can adjust color as needed
+                        dataTextStyle: TextStyle(fontSize: 18),
+                        columns: [
+                          DataColumn(
+                            label: Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Clubs',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ],
                         rows: clubs
                             .map(
                               (club) => DataRow(cells: [
-                            DataCell(Text(club.toString())),
+                            DataCell(
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: Text("->     " + club.toString()),
+                              ),
+                            ),
                           ]),
                         )
                             .toList(),
                       );
+
+
                     },
                   ),
                 ],

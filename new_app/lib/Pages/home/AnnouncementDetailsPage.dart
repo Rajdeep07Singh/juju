@@ -8,8 +8,8 @@ class AnnouncementDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return Scaffold(backgroundColor: Colors.blueGrey,
+      appBar: AppBar(backgroundColor: Colors.white,
         title: Text('Announcement Details'),
       ),
       body: SingleChildScrollView(
@@ -19,18 +19,18 @@ class AnnouncementDetailsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Title: ${activity['title'] ?? 'N/A'}',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                '${activity['title'] ?? 'N/A'}',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: Colors.white),
               ),
               SizedBox(height: 16),
               Text(
                 'Date: ${_formatDate(activity['date']) ?? 'N/A'}',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 18,color: Colors.white),
               ),
               SizedBox(height: 16),
               Text(
                 'Details: ${activity['details'] ?? 'N/A'}',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 16,color: Colors.black),
               ),
             ],
           ),

@@ -3,6 +3,7 @@ import 'package:new_app/Pages/LoginAndSignup/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:new_app/Pages/home/myclubs.dart';
+import 'package:new_app/Pages/home/developed_by.dart';
 
 import '../../services/auth.dart';
 
@@ -304,33 +305,37 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ],
                                         ),
                                       ),
-                                      const Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 8),
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => DevelopedByPage()),
+                                          );
+                                        },
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 8, 16, 8),
+                                              padding: EdgeInsetsDirectional.fromSTEB(0, 8, 16, 8),
                                               child: Icon(
-                                                Icons.notifications_active,
+                                                Icons.developer_board_rounded,
                                                 color: Colors.white,
                                                 size: 24,
                                               ),
                                             ),
                                             Expanded(
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 12, 0),
+                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                                 child: Text(
-                                                  'Notification Settings',
+                                                  'Developed By',
                                                   textAlign: TextAlign.start,
                                                   style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.white),
+                                                    fontSize: 14,
+                                                    color: Colors.white,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -342,6 +347,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ],
                                         ),
                                       ),
+                                    ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(0, 0, 0, 8),
