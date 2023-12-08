@@ -23,6 +23,7 @@ class _NewAnnouncePageState extends State<NewAnnouncePage> {
     selectedDate = DateTime.now();
   }
   Future<void> _pickImage() async {
+
     final ImagePicker picker = ImagePicker();
     final XFile? pickedImageFile =
         await picker.pickImage(source: ImageSource.gallery);
@@ -45,6 +46,7 @@ class _NewAnnouncePageState extends State<NewAnnouncePage> {
 
   @override
   Widget build(BuildContext context) {
+    debugShowCheckedModeBanner: false;
     final size = MediaQuery.of(context).size;
     scaffoldMessenger = ScaffoldMessenger.of(context);
     return Scaffold(
@@ -112,12 +114,16 @@ class _NewAnnouncePageState extends State<NewAnnouncePage> {
                             SizedBox(
                                 width: announce.image.value == null ? 10 : 2),
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 if (announce.image.value == null)
-                                  const Text('No Image Selected !!',
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.white)),
+                                  Expanded(
+                                    child: Center(
+                                      child: Text(
+                                        'No Image Selected !!',
+                                        style: TextStyle(fontSize: 16, color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
                                 if (announce.image.value != null)
                                   SizedBox(
                                     width: size.width * 0.5,
@@ -128,7 +134,8 @@ class _NewAnnouncePageState extends State<NewAnnouncePage> {
                                     ),
                                   ),
                               ],
-                            ),
+                            )
+                            ,
                           ],
                         ),
                       ),
@@ -262,6 +269,7 @@ class MyFormField extends StatelessWidget {
   final double radius;
   @override
   Widget build(BuildContext context) {
+    debugShowCheckedModeBanner: false;
     return TextFormField(
       controller: controller,
       maxLines: maxLines,

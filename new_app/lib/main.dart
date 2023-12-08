@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
                   return CustomLoadingScreen(
                     isLoading: false, // Set to true if you want to show loading
                     child: HomePage(
-                      currentIndex: 1,
+                      currentIndex: 0,
                       profileType: snapshot.data!['profileType'].toString(),
                     ),
                   );

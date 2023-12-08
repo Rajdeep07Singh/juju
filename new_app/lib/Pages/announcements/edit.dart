@@ -85,6 +85,7 @@ class _EditAnnouncementState extends State<EditAnnouncement> {
   );
   @override
   Widget build(BuildContext context) {
+    debugShowCheckedModeBanner: false;
     final size = MediaQuery.of(context).size;
     scaffoldMessenger = ScaffoldMessenger.of(context);
     return Scaffold(
